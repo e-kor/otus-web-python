@@ -14,14 +14,6 @@ def search_web(*keywords):
     yield from map(lambda item: item.get('link'), response.json()['items'])
 
 
-
-def mock_search_web(*keywords):
-    links = ['https://www.maliburumdrinks.com/us/where-to-buy/',
-            ]
-    yield from map(lambda x: x, links)
-
-
-
 def extract_nested_urls(url):
     try:
         page = requests.get(url).text
