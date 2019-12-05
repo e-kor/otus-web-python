@@ -14,10 +14,12 @@ def search_web(*keywords):
     yield from map(lambda item: item.get('link'), response.json()['items'])
 
 
-def search_web(*keywords):
+"""
+def mock_search_web(*keywords):
     links = ['https://www.maliburumdrinks.com/us/where-to-buy/',
             ]
     yield from map(lambda x: x, links)
+"""
 
 
 def extract_nested_urls(url):
@@ -43,7 +45,7 @@ def recursive_extract(*urls, level=0):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('keywords', help='strings passed to google search', nargs='+')
-    parser.add_argument('-l', '--limit', help='maximum count of urls to display', default=10**3, type=int,
+    parser.add_argument('-l', '--limit', help='maximum count of urls to display', default=10 ** 3, type=int,
                         required=False)
     parser.add_argument('-r', '--recursion', help='level of recursion to search through pages', default=0, type=int,
                         required=False)
