@@ -14,12 +14,12 @@ def search_web(*keywords):
     yield from map(lambda item: item.get('link'), response.json()['items'])
 
 
-"""
+
 def mock_search_web(*keywords):
     links = ['https://www.maliburumdrinks.com/us/where-to-buy/',
             ]
     yield from map(lambda x: x, links)
-"""
+
 
 
 def extract_nested_urls(url):
@@ -29,7 +29,7 @@ def extract_nested_urls(url):
         return []
     soup = BeautifulSoup(page, 'html.parser')
     all_urls = map(lambda block: block.get('href'), soup.find_all('a'))
-    yield from filter(lambda link: getattr(link, 'startswith', lambda _: False)('http'), all_urls)
+    yield from filter(lambda link: link and link.startswith('http'), all_urls)
 
 
 def recursive_extract_urls(*urls, level=0):
