@@ -32,14 +32,14 @@ def extract_nested_urls(url):
     yield from filter(lambda link: getattr(link, 'startswith', lambda _: False)('http'), all_urls)
 
 
-def recursive_extract(*urls, level=0):
+def recursive_extract_urls(*urls, level=0):
     for url in urls:
         if level <= 0:
             yield url
         elif level == 1:
             yield from extract_nested_urls(url)
         else:
-            yield from recursive_extract(*extract_nested_urls(url), level=level - 1)
+            yield from recursive_extract_urls(*extract_nested_urls(url), level=level - 1)
 
 
 if __name__ == '__main__':
@@ -52,7 +52,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     search_results = search_web(*args.keywords)
-    nested_urls = recursive_extract(*search_results, level=args.recursion)
+    nested_urls = recursive_extract_urls(*search_results, level=args.recursion)
 
     for count, url in enumerate(islice(nested_urls, args.limit)):
         print(f"{count}\t{url}")
