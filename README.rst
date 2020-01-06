@@ -12,5 +12,5 @@ just run main.py with keywords to search as arguements: ::
 
 additional keyword args arguements:
 
-   * -l, --limit: maximum count of links to display
-   * -r, --recursion: level of recursion
+* -l, --limit: maximum count of links to display
+* -r, --recursion: level of recursion
