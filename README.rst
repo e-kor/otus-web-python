@@ -1,9 +1,11 @@
 Introduction
 ^^^^^^^^^^^^^^^^^^^^^^^^^
-python module for recursive googling
+home assignments done through online course Otus Python for Web
 
-Example
+task1_recur_search
 ^^^^^^^^^^^^^^^^^^^^^^^^^
+module for recursive googling
+
 just run main.py fith keywords to search as arguements: ::
 
     python3 main.py stuff to search for
