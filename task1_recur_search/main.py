@@ -2,10 +2,7 @@ import argparse
 import requests
 from bs4 import BeautifulSoup
 from itertools import islice
-
-API_KEY = 'AIzaSyB5KBYefmCzfLoAhMROp_JmMxdYicToldo'
-BASE_URL = 'https://www.googleapis.com/customsearch/v1'
-ENGINE_ID = '012675951959685604488:e0emphdfbg8'
+from settings import API_KEY, BASE_URL, ENGINE_ID
 
 
 def search_web(*keywords):
@@ -36,7 +33,8 @@ def recursive_extract_urls(*urls, level=0):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('keywords', help='strings passed to google search', nargs='+')
+    parser.add_argument(
+        'keywords', help='strings passed to google search', nargs='+')
     parser.add_argument('-l', '--limit', help='maximum count of urls to display', default=10 ** 3, type=int,
                         required=False)
     parser.add_argument('-r', '--recursion', help='level of recursion to search through pages', default=0, type=int,
