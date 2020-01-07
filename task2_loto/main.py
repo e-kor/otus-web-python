@@ -1,15 +1,14 @@
-from classes import Card, Player, Master
+from classes import Player, Master
 
 
-def run_game():
-    players_count = int(input('How many players will play?\n'))
+def run_game(players_count):
     master = Master()
     players = [Player(i, master.get_card()) for i in range(players_count)]
-    n = 0
+    loop_number = 0
     while True:
-        n += 1
+        loop_number += 1
         number = master.show_number()
-        print(f"Round {n}. And the number is {number}")
+        print(f"Round {loop_number}. And the number is {number}")
         [p.card.check(number) for p in players]
         winners = list(filter(lambda p: p.has_won, players))
         true_winners = list(
@@ -23,4 +22,5 @@ def run_game():
 
 
 if __name__ == '__main__':
-    run_game()
+    players_count = int(input('How many players will play?\n'))
+    run_game(players_count)

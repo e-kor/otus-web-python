@@ -1,5 +1,4 @@
-from random import choice, randint, shuffle
-from typing import NoReturn, Set
+from random import choice, shuffle
 from settings import NUMBERS_IN_CARD_COUNT
 
 
