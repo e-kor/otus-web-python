@@ -1,26 +1,42 @@
 from classes import Player, Master
 
 
-def run_game(players_count):
+def run_game():
     master = Master()
-    players = [Player(i, master.get_card()) for i in range(players_count)]
-    loop_number = 0
+    name = input('What is your name?\n')
+    player = Player(name, master.get_card())
+    print(f'Cool! Your card is:\n{player.card}')
+    opponent = Player('computer', master.get_card())
+    print(f'Your opponent is: {opponent}')
     while True:
-        loop_number += 1
-        number = master.show_number()
-        print(f"Round {loop_number}. And the number is {number}")
-        [p.card.check(number) for p in players]
-        winners = list(filter(lambda p: p.has_won, players))
-        true_winners = list(
-            filter(lambda w: master.is_checked_right(w.card), winners))
-        if true_winners:
-            print(f"We've got a winner:")
-            print('\n'.join([repr(p) for p in winners]))
-            break
-        print('\n'.join([repr(p) for p in players]))
         print()
+        number = master.show_number()
+        print(f'The number is {number}')
+        to_check_ans = input('Want to check? (y/n)\n')
+        if to_check_ans.lower() in ['y', 'yes']:
+            try:
+                player.card.check(number)
+                print(
+                    f"You've checked a number! Your card now is:\n{player.card}")
+            except ValueError:
+                print('Wrong checking. Number was not in card. Game over')
+                break
+        else:
+            if number in player.card.numbers:
+                print(
+                    'Wrong. Should have checked the number. It was in the card. Game over')
+                break
+        try:
+            opponent.card.check(number)
+            print(
+                f'{opponent.name} has checked a number! His card now is:\n{opponent.card}')
+        except ValueError:
+            pass
+        for p in (player, opponent):
+            if p.has_won:
+                print(f'And... we have a winner!')
+                break
 
 
 if __name__ == '__main__':
-    players_count = int(input('How many players will play?\n'))
-    run_game(players_count)
+    run_game()

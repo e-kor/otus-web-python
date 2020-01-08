@@ -1,15 +1,19 @@
 from random import choice, shuffle
-from settings import NUMBERS_IN_CARD_COUNT
+from settings import NUMBERS_IN_CARD_COUNT, ROWS_COUNT, COLS_COUNT, CHECKED_SYMBOL, BLANK_SYMBOL
 
 
 class Card:
     def __init__(self, numbers):
         self.numbers = set(numbers)
         self.checked_numbers = set()
+        holding_places = list(range(ROWS_COUNT * COLS_COUNT))
+        shuffle(holding_places)
+        self.holding_places = holding_places[:NUMBERS_IN_CARD_COUNT]
 
     def check(self, number: int) -> None:
-        if number in self.numbers:
-            self.checked_numbers.add(number)
+        if number not in self.numbers:
+            raise ValueError(f'{number} not in card')
+        self.checked_numbers.add(number)
 
     def __hash__(self):
         res = 0
@@ -26,18 +30,22 @@ class Card:
         return True
 
     def __repr__(self):
-        symbols = [
-            f'{"X " if num in self.checked_numbers else "  "}{num}' for num in self.numbers]
-        return '|'.join(symbols)
+        symbols = [BLANK_SYMBOL for _ in range(ROWS_COUNT * COLS_COUNT)]
+        for num, place in zip(self.numbers, self.holding_places):
+            symbols[place] = CHECKED_SYMBOL if num in self.checked_numbers else str(
+                num)
+        rows = ['|'.join(symbols[i * COLS_COUNT: (i + 1) * COLS_COUNT])
+                for i in range(ROWS_COUNT)]
+        return '\n'.join(rows)
 
 
 class Player:
-    def __init__(self, number: int, card: Card):
-        self.number = number
+    def __init__(self, name: str, card: Card):
+        self.name = name
         self.card = card
 
     def __repr__(self):
-        return f"Player {self.number}: {repr(self.card)}"
+        return f"{self.name}:\n{self.card}"
 
     @property
     def has_won(self):

@@ -6,9 +6,12 @@ task2_loto
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 loto game
 
-just run main.py and tell how many players you want to play: ::
+run main.py to play against computer: ::
 
     python3 main.py
+
+if you're lazy you can just run main_auto.py to see how computer plays against
+computer
 
 
 task1_recur_search
