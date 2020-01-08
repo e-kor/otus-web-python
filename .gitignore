@@ -1,4 +1,8 @@
 .idea/
-.DS_Store/
+.DS_Store
 .mypy_cache/
 __pycache__/
+*cache*/
+*.pyc
+*.egg-info/
+venv/

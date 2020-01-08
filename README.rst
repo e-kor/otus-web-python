@@ -6,12 +6,17 @@ task2_loto
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 loto game
 
-run main.py to play against computer: ::
+first you should install package: ::
 
-    python3 main.py
+    python task2_loto/setup.py install
 
-if you're lazy you can just run main_auto.py to see how computer plays against
-computer
+then run main.py to play against computer: ::
+
+    python -m loto.main
+
+if you're lazy you can just see how computer plays against computer: ::
+
+    python -m loto.main_auto
 
 
 task1_recur_search
@@ -20,7 +25,7 @@ module for recursive googling
 
 just run main.py with keywords to search as arguements: ::
 
-    python3 main.py stuff to search for
+    python main.py stuff to search for
 
 additional keyword arguements:
 

@@ -1,4 +1,4 @@
-from loto.classes import Player, Master
+from classes import Player, Master
 
 
 def run_game(players_count):
