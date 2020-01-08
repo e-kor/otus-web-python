@@ -16,20 +16,20 @@ def run_game():
         if to_check_ans.lower() in ['y', 'yes']:
             try:
                 player.card.check(number)
-                print(
-                    f"You've checked a number! Your card now is:\n{player.card}")
+                print(f"You've checked a number! "
+                      f"Your card now is:\n{player.card}")
             except ValueError:
                 print('Wrong checking. Number was not in card. Game over')
                 break
         else:
             if number in player.card.numbers:
-                print(
-                    'Wrong. Should have checked the number. It was in the card. Game over')
+                print('Wrong. Should have checked the number. '
+                      'It was in the card. Game over')
                 break
         try:
             opponent.card.check(number)
-            print(
-                f'{opponent.name} has checked a number! His card now is:\n{opponent.card}')
+            print(f'{opponent.name} has checked a number! '
+                  f'His card now is:\n{opponent.card}')
         except ValueError:
             pass
         for p in (player, opponent):

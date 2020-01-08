@@ -1,5 +1,6 @@
 from random import choice, shuffle
-from settings import NUMBERS_IN_CARD_COUNT, ROWS_COUNT, COLS_COUNT, CHECKED_SYMBOL, BLANK_SYMBOL
+from settings import NUMBERS_IN_CARD_COUNT, ROWS_COUNT, COLS_COUNT,\
+    CHECKED_SYMBOL, BLANK_SYMBOL
 
 
 class Card:
@@ -32,8 +33,8 @@ class Card:
     def __repr__(self):
         symbols = [BLANK_SYMBOL for _ in range(ROWS_COUNT * COLS_COUNT)]
         for num, place in zip(self.numbers, self.holding_places):
-            symbols[place] = CHECKED_SYMBOL if num in self.checked_numbers else str(
-                num)
+            symbols[place] = CHECKED_SYMBOL if num in self.checked_numbers\
+                else str(num)
         rows = ['|'.join(symbols[i * COLS_COUNT: (i + 1) * COLS_COUNT])
                 for i in range(ROWS_COUNT)]
         return '\n'.join(rows)
