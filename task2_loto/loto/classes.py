@@ -1,5 +1,5 @@
 from random import choice, shuffle
-from settings import NUMBERS_IN_CARD_COUNT, ROWS_COUNT, COLS_COUNT,\
+from loto.settings import NUMBERS_IN_CARD_COUNT, ROWS_COUNT, COLS_COUNT,\
     CHECKED_SYMBOL, BLANK_SYMBOL
 
 
@@ -49,7 +49,7 @@ class Player:
         return f"{self.name}:\n{self.card}"
 
     @property
-    def has_won(self):
+    def has_won(self) -> bool:
         return len(self.card.checked_numbers) == NUMBERS_IN_CARD_COUNT
 
 
@@ -79,4 +79,4 @@ class Master:
         for num in card.checked_numbers:
             if num not in card.numbers or num not in self.numbers_shown:
                 return False
-            return True
+        return True

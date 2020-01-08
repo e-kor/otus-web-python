@@ -1,4 +1,4 @@
-from classes import Player, Master
+from loto.classes import Player, Master
 
 
 def run_game():
@@ -8,7 +8,7 @@ def run_game():
     print(f'Cool! Your card is:\n{player.card}')
     opponent = Player('computer', master.get_card())
     print(f'Your opponent is: {opponent}')
-    while True:
+    while master.numbers_queue:
         print()
         number = master.show_number()
         print(f'The number is {number}')
