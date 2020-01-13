@@ -1,15 +1,21 @@
-from .utils import search_web, extract_nested_urls, recursive_extract_urls
 from pytest import fixture, raises
+
+from utils import extract_nested_urls, recursive_extract_urls, search_web
 
 
 @fixture
 def empty_results_keywords():
-    return 'heldsajkhbdas sajhkdas'
+    return "heldsajkhbdas sajhkdas"
 
 
 @fixture
 def google_results():
-    return list(search_web('some keywords'))
+    return list(search_web("some keywords"))
+
+
+@fixture
+def url():
+    return "https://www.google.com/"
 
 
 def test_noresults(empty_results_keywords):
@@ -21,15 +27,23 @@ def test_quantity(google_results):
     assert len(google_results) == 10
 
 
-def test_extraction(google_results):
-    assert len(list(extract_nested_urls(google_results[0]))) > 0
+def test_extraction(url):
+    assert len(list(extract_nested_urls(url))) > 0
 
 
-def test_recursive_0(google_results):
-    result = recursive_extract_urls(google_results[0], level=0)
+def test_recursive_0(url):
+    result = recursive_extract_urls(url, level=0)
     assert len(list(result)) == 1
 
 
-# def test_recursive_1(google_results):
-#    result = recursive_extract_urls(google_results[0], level=1)
-#    assert len(list(result)) > 1
+def test_resursive_1(url):
+    recursive1 = list(recursive_extract_urls(url, level=1))
+    non_recursive = list(extract_nested_urls(url))
+    assert recursive1 == non_recursive
+
+
+# take to much time
+# def test_recursive_2(url):
+#    recursive1 = list(recursive_extract_urls(url, level=1))
+#    recursive2 = list(recursive_extract_urls(url, level=2))
+#    assert len(recursive1) < len(recursive2)
