@@ -13,7 +13,7 @@ Assignment
 
 Decomposition
 ^^^^^^^^^^^^^^^^^^^^^^^^^
-models:
+create models for:
 
 * course
 * tutor
