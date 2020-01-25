@@ -2,7 +2,7 @@ Run
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 run the following commands:
 
-* python create_db.py - creation of db file, tables and object records
+* python create_db.py - creation of db_file, tables and object records
 * python query.py - querying and printing all posts of the user having two specific tags
 
 Задание
