@@ -1,15 +1,21 @@
 import os
 
-import sqlalchemy
-from sqlalchemy.orm import Session, scoped_session, sessionmaker
+from sqlalchemy.orm import Session
+from sqlalchemy.orm.exc import NoResultFound
 
 from data import DB_NAME, POSTS_INFO, TAG_NAMES, USER_NAMES
 from models import Base, Post, Tag, User
+from setup_db import engine, session
 
+import logging
+
+logging.basicConfig(level=logging.DEBUG)
 
 def clear_db(filename):
-    os.remove(filename)
-
+    try:
+        os.remove(filename)
+    except FileNotFoundError:
+        logging.debug('no db file was found at %s', filename)
 
 def create_tables(engine):
     Base.metadata.create_all(engine)
@@ -32,16 +38,15 @@ def insert_posts(session: Session, *posts_info):
         tag_ids = post_info.pop('tag_ids')
         p = Post(**post_info)
         for tag_id in tag_ids:
-            p.tags.append(session.query(Tag).filter(Tag.id == tag_id).one())
+            try:
+                p.tags.append(session.query(Tag).filter(Tag.id == tag_id).one())
+            except NoResultFound:
+                logging.debug("no tag was found with id %d", tag_id)
         session.add(p)
     session.commit()
 
 
 if __name__ == '__main__':
-    engine = sqlalchemy.create_engine(f'sqlite:///{DB_NAME}', echo=False)
-    session_factory = sessionmaker(bind=engine)
-    Session = scoped_session(session_factory)
-    session: Session = Session()
 
     clear_db(DB_NAME)
     create_tables(engine)
