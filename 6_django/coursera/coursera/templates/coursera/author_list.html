@@ -1,0 +1,35 @@
+{% extends 'otusblog/base.html' %}
+{% load static %}
+
+{% block content %}
+    <h1>Публикации</h1>
+    <div class="articles-list">
+        <ul>
+            {% for author in object_list %}
+                <li>
+                    <a href="{% url 'otusblog:author' author.pk %}">
+                        {{ author.full_name }}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    {% if is_paginated %}
+        <div class="articles-paginator">
+            <span class="page-links">
+                <a href="{% url 'otusblog:authors' %}?page=1"><<</a>
+                {% if page_obj.has_previous %}
+                    <a href="{% url 'otusblog:authors' %}?page={{ page_obj.previous_page_number }}"><</a>
+                {% endif %}
+                <span class="page-current">
+                    страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}
+                </span>
+                {% if page_obj.has_next %}
+                    <a href="{% url 'otusblog:authors' %}?page={{ page_obj.next_page_number }}">></a>
+                {% endif %}
+                <a href="{% url 'otusblog:authors' %}?page={{ page_obj.paginator.num_pages }}">>></a>
+            </span>
+        </div>
+    {% endif %}
+{% endblock %}

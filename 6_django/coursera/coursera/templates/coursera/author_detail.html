@@ -1,0 +1,23 @@
+{% extends 'otusblog/base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="article-record">
+        <h2>{{ object.first_name }}</h2>
+        <h3>{{ object.last_name }}</h3>
+        <h4>{{ object.date_joined|date:"Y-m-d" }}</h4>
+
+    </div>
+    <div class="links">
+        <div class="link">
+            <a href="{% url 'otusblog:author_update' object.pk %}">
+                редактировать
+            </a>
+        </div>
+        <div class="link">
+            <a href="{#% url 'otusblog:article_delete' article2.pk %#}">
+                удалить
+            </a>
+        </div>
+    </div>
+{% endblock %}

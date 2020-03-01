@@ -1,0 +1,14 @@
+{% extends 'otusblog/base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="article-record-delete-form">
+        <form method="post">
+            {% csrf_token %}
+            <input type="submit" value="удалить публикацию {{ object.title }}?">
+        </form>
+        <button>
+            <a href="{% url 'otusblog:index' %}">отмена</a>
+        </button>
+    </div>
+{% endblock %}
