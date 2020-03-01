@@ -1,6 +1,7 @@
 from django.core.management import BaseCommand
 from faker import Faker
-from courses.models import Tutor, Student, Course, Lesson
+from courses.models import Course, Lesson
+from users.models import  Tutor, Student
 from transliterate import translit
 import logging
 from random import randint

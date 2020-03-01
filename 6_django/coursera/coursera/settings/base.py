@@ -12,8 +12,8 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import os
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
+BASE_DIR =os.path.join( os.path.dirname(os.path.dirname(os.path.abspath(__file__))) , '..')
+print(BASE_DIR)
 from django.core.management.utils import get_random_secret_key
 
 # Auto generate a unique SECRET_KEY for development
@@ -33,10 +33,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'courses.apps.CoursesConfig'
+    'courses.apps.CoursesConfig',
+    'users.apps.UsersConfig'
 ]
 
 MIDDLEWARE = [
+'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -64,6 +66,7 @@ TEMPLATES = [
     },
 ]
 
+
 WSGI_APPLICATION = 'coursera.wsgi.application'
 
 # Database
@@ -87,7 +90,7 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-AUTH_USER_MODEL = 'courses.User'
+AUTH_USER_MODEL = 'users.User'
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 
