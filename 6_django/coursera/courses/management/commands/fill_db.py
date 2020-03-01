@@ -1,0 +1,90 @@
+from django.core.management import BaseCommand
+from faker import Faker
+from courses.models import Tutor, Student, Course, Lesson
+from transliterate import translit
+import logging
+from random import randint
+
+STUDENTS_COUNT = 50
+TUTORS_COUNT = 10
+COURSES_COUNT = 10
+LESSONS_PER_COURSE_COUNT = 30
+FAKER = Faker(locale='ru_RU')
+
+
+def clear_db():
+    for cls in Tutor, Student, Course, Lesson:
+        info = cls.objects.all().delete()
+        logging.info('deleted all %s: %s', cls.__name__, info)
+
+
+def create_student():
+    first_name = FAKER.first_name()
+    last_name = FAKER.last_name()
+    username = '_'.join(
+        [translit(v, reversed=True).lower() for v in (first_name, last_name)])
+    s = Student.objects.create(
+        username=username,
+        first_name=first_name,
+        last_name=last_name
+    )
+    logging.debug("created student %s", s)
+    return s
+
+
+def create_tutor():
+    first_name = FAKER.first_name()
+    last_name = FAKER.last_name()
+    username = '_'.join(
+        [translit(v, reversed=True).lower() for v in (first_name, last_name)])
+    t = Tutor.objects.create(
+        username=username,
+        first_name=first_name,
+        last_name=last_name
+    )
+    logging.debug("created tutor %s", t)
+    return t
+
+
+def create_lesson(c: Course):
+    l = Lesson.objects.create(
+        date=FAKER.date_this_year(),
+        title=FAKER.text(max_nb_chars=50, ext_word_list=None),
+        synopsis=FAKER.text(max_nb_chars=300, ext_word_list=None),
+        course=c
+    )
+    logging.debug("created lesson %s", l)
+    return l
+
+
+def create_course():
+    c = Course.objects.create(
+        title=FAKER.text(max_nb_chars=200, ext_word_list=None),
+        tutor=FAKER.random_element(Tutor.objects.all()),
+    )
+    c.students.set(FAKER.random_elements(Student.objects.all()))
+    for _ in range(LESSONS_PER_COURSE_COUNT):
+        create_lesson(c)
+    logging.debug("created course %s", c)
+    return c
+
+
+def fill_db():
+    logging.info("started filling test db")
+    for _ in range(STUDENTS_COUNT):
+        create_student()
+    logging.info("created %s students", STUDENTS_COUNT)
+
+    for _ in range(TUTORS_COUNT):
+        create_tutor()
+    logging.info("created %s tutors", TUTORS_COUNT)
+
+    for _ in range(COURSES_COUNT):
+        create_course()
+    logging.info("created %s courses", COURSES_COUNT)
+
+
+class Command(BaseCommand):
+    def handle(self, *args, **kwargs):
+        clear_db()
+        fill_db()

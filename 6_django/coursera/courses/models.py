@@ -34,7 +34,7 @@ class Course(models.Model):
 class Lesson(models.Model):
     date = models.DateTimeField()
     title = models.CharField(max_length=100)
-    synopsis = models.CharField(max_length=1001, blank=True, null=True)
+    synopsis = models.TextField(blank=True, null=True)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
 
     def __str__(self):
