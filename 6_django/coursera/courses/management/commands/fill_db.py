@@ -6,9 +6,9 @@ from transliterate import translit
 import logging
 from random import randint
 
-STUDENTS_COUNT = 50
+STUDENTS_COUNT = 500
 TUTORS_COUNT = 10
-COURSES_COUNT = 10
+COURSES_COUNT = 50
 LESSONS_PER_COURSE_COUNT = 30
 FAKER = Faker(locale='ru_RU')
 
@@ -23,9 +23,9 @@ def create_student():
     first_name = FAKER.first_name()
     last_name = FAKER.last_name()
     username = '_'.join(
-        [translit(v, reversed=True).lower() for v in (first_name, last_name)])
+        [translit(v, reversed=True).lower() for v in (first_name, last_name,)])
     s = Student.objects.create(
-        username=username,
+        username=username +  str(FAKER.pyint()),
         first_name=first_name,
         last_name=last_name
     )
@@ -50,8 +50,8 @@ def create_tutor():
 def create_lesson(c: Course):
     l = Lesson.objects.create(
         date=FAKER.date_this_year(),
-        title=FAKER.text(max_nb_chars=50, ext_word_list=None),
-        synopsis=FAKER.text(max_nb_chars=300, ext_word_list=None),
+        name=FAKER.text(max_nb_chars=50, ext_word_list=None),
+        description=FAKER.text(max_nb_chars=300, ext_word_list=None),
         course=c
     )
     logging.debug("created lesson %s", l)
@@ -60,8 +60,9 @@ def create_lesson(c: Course):
 
 def create_course():
     c = Course.objects.create(
-        title=FAKER.text(max_nb_chars=200, ext_word_list=None),
-        tutor=FAKER.random_element(Tutor.objects.all()),
+        name=FAKER.text(max_nb_chars=20, ext_word_list=None),
+        description=FAKER.text(max_nb_chars=300, ext_word_list=None),
+        tutor=FAKER.random_element(Tutor.objects.all())
     )
     c.students.set(FAKER.random_elements(Student.objects.all()))
     for _ in range(LESSONS_PER_COURSE_COUNT):

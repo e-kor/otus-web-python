@@ -2,15 +2,33 @@
 {% load static %}
 
 {% block content %}
-    <h1>Публикации</h1>
+  <h1 class="text-center">Курсы</h1>
     <div class="courses-list">
         <ul>
             {% for course in object_list %}
                 <li>
-
-                        {{ course }}
+                        <a href="{% url 'courses:course' course.pk %}">
+                        {{ course.name }}
+                    </a>
                 </li>
             {% endfor %}
         </ul>
     </div>
+ {% if is_paginated %}
+        <div class="articles-paginator">
+            <span class="page-links">
+                <a href="{% url 'courses:index' %}?page=1"><<</a>
+                {% if page_obj.has_previous %}
+                    <a href="{% url 'courses:index' %}?page={{ page_obj.previous_page_number }}"><</a>
+                {% endif %}
+                <span class="page-current">
+                    страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}
+                </span>
+                {% if page_obj.has_next %}
+                    <a href="{% url 'courses:index' %}?page={{ page_obj.next_page_number }}">></a>
+                {% endif %}
+                <a href="{% url 'courses:index' %}?page={{ page_obj.paginator.num_pages }}">>></a>
+            </span>
+        </div>
+    {% endif %}
 {% endblock %}

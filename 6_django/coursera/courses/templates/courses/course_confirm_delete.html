@@ -1,0 +1,15 @@
+{% extends 'courses/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="course-delete-form text-center">
+<div>Уверены, что зотите удалить курс?</div>
+
+    <form method="post">
+        {% csrf_token %}
+          <a class="btn btn-outline-primary" href="{% url 'courses:index' %}" role="button">Назад</a>
+        <input class="btn btn-outline-danger" type="submit" value=Уверен>
+    </form>
+
+</div>
+{% endblock %}
