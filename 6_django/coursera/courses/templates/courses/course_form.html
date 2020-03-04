@@ -2,11 +2,56 @@
 {% load static %}
 
 {% block content %}
-<div class="course-form">
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="сохранить">
-    </form>
-</div>
+    <h1 class="text-center">{{ course.name }}</h1>
+    <div class="course-form">
+        <form method="post">
+            {% csrf_token %}
+            <div><a class="btn btn-outline-primary" href="{% url 'courses:index' %}" role="button">Назад</a>
+                <input class="btn btn-primary" type="submit" value=Сохранить></div>
+            {{ form.as_p }}
+
+            <table class="table">
+                {{ lessons.management_form }}
+
+                {% for form in lessons.forms %}
+                    {% if forloop.first %}
+                        <thead>
+                        <tr>
+                            {% for field in form.visible_fields %}
+                                <th class="formset-td">
+                                    {{ field.label|capfirst }}
+                                </th>
+                            {% endfor %}
+
+                        </tr>
+                        </thead>
+                    {% endif %}
+                    <tr class="formset-row">
+                        {% for field in form.visible_fields %}
+                            <td class="formset-td">
+                                {% if forloop.first %}
+                                    {% for hidden in form.hidden_fields %}
+                                        {{ hidden }}
+                                    {% endfor %}
+                                {% endif %}
+                                {{ field.errors.as_ul }}
+                                {{ field }}
+                            </td>
+                        {% endfor %}
+                    </tr>
+
+                {% endfor %}
+            </table>
+
+        </form>
+    </div>
+
+    <script>
+        $('.formset-row').formset({
+            addText: 'добавить публикацию',
+            deleteText: 'удалить',
+            prefix: 'orderitems',
+        });
+    </script>
 {% endblock %}
+

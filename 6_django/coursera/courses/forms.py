@@ -1,7 +1,7 @@
 from django import forms
+from django.forms import inlineformset_factory
 
-from courses.models import Lesson, Course
-from users.models import Tutor, Student
+from courses.models import Course, Lesson
 
 
 class BlogBaseForm(forms.ModelForm):
@@ -11,13 +11,18 @@ class BlogBaseForm(forms.ModelForm):
             field.widget.attrs['class'] = 'form-control'
 
 
-class CourseForm(BlogBaseForm):
-    class Meta:
-        model = Course
-        fields = ['name', 'description']
-
-
 class LessonForm(BlogBaseForm):
     class Meta:
         model = Lesson
-        fields = ['name', 'date', 'description']
+        exclude = ()
+
+
+LessonFormSet = inlineformset_factory(Course, Lesson, form=LessonForm,
+                                      fields=['date', 'name', 'description'],
+                                      extra=1, can_delete=True)
+
+
+class CourseForm(BlogBaseForm):
+    class Meta:
+        model = Course
+        exclude = ()

@@ -1,5 +1,4 @@
 from django.contrib.auth.models import AbstractUser
-from django.db import models
 
 
 class User(AbstractUser):
@@ -8,16 +7,17 @@ class User(AbstractUser):
 
 class Tutor(User):
     def __str__(self):
-        return f"Tutor {self.first_name} {self.last_name}"
+        return self.get_full_name()
 
     class Meta:
-        verbose_name = 'Tutor'
+        verbose_name = 'Преподователь'
+        verbose_name_plural = "Преподователи"
 
 
 class Student(User):
     def __str__(self):
-        return f"Student {self.first_name} {self.last_name}"
+        return self.get_full_name()
 
     class Meta:
-        verbose_name = 'Student'
-
+        verbose_name = 'Ученик'
+        verbose_name_plural = "Ученики"

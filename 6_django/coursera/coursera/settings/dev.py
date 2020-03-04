@@ -1,10 +1,10 @@
-from .base import *
 import logging
+
+from .base import *
 
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 DATABASES = {
     'default': {
@@ -15,7 +15,7 @@ DATABASES = {
 INSTALLED_APPS.append('debug_toolbar')
 INTERNAL_IPS = [
     # ...
-   # '127.0.0.1',
+    # '127.0.0.1',
     # ...
 ]
 logging.basicConfig(level=logging.DEBUG)

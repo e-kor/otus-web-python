@@ -1,14 +1,11 @@
-from django.contrib.auth.decorators import user_passes_test, login_required
 from django.db import transaction
-from django.forms import inlineformset_factory
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.utils.decorators import method_decorator
-from django.views.generic import DetailView, ListView, CreateView, UpdateView, \
-    DeleteView
-from .models import Lesson, Course
+from django.views.generic import DeleteView, DetailView, ListView, UpdateView
+
 from courses import forms
+from .models import Course
 
 
 class CourseListView(ListView):
@@ -25,14 +22,36 @@ class CourseDetailView(DetailView):
 
 class CourseUpdateView(UpdateView):
     model = Course
-    success_url = reverse_lazy('courses:index')
     form_class = forms.CourseForm
+
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        if self.request.POST:
+            data['lessons'] = forms.LessonFormSet(self.request.POST,
+                                                  instance=self.object)
+        else:
+            data['lessons'] = forms.LessonFormSet(instance=self.object)
+        return data
+
+    def form_valid(self, form):
+        context = self.get_context_data()
+        lessons_data = context['lessons']
+        with transaction.atomic():
+            self.object = form.save()
+            if lessons_data.is_valid():
+                lessons_data.instance = self.object
+                lessons_data.save()
+        return super().form_valid(form)
+
+    def get_success_url(self, **kwargs):
+        return f'/course/detail/{self.object.pk}/'
 
 
 class CourseCreateView(UpdateView):
     model = Course
     success_url = reverse_lazy('courses:index')
     form_class = forms.CourseForm
+
 
 class CourseDeleteView(DeleteView):
     model = Course
@@ -44,6 +63,8 @@ class CourseDeleteView(DeleteView):
         self.object.save()
 
         return HttpResponseRedirect(self.get_success_url())
+
+
 def about(request):
     context = {
         'title': 'о нас',

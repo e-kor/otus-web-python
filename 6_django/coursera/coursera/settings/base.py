@@ -12,7 +12,8 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import os
 
-BASE_DIR =os.path.join( os.path.dirname(os.path.dirname(os.path.abspath(__file__))) , '..')
+BASE_DIR = os.path.join(
+    os.path.dirname(os.path.dirname(os.path.abspath(__file__))), '..')
 print(BASE_DIR)
 from django.core.management.utils import get_random_secret_key
 
@@ -38,7 +39,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-'debug_toolbar.middleware.DebugToolbarMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -65,7 +66,6 @@ TEMPLATES = [
         },
     },
 ]
-
 
 WSGI_APPLICATION = 'coursera.wsgi.application'
 

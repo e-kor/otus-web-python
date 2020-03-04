@@ -1,10 +1,11 @@
+import logging
+
 from django.core.management import BaseCommand
 from faker import Faker
-from courses.models import Course, Lesson
-from users.models import  Tutor, Student
 from transliterate import translit
-import logging
-from random import randint
+
+from courses.models import Course, Lesson
+from users.models import Student, Tutor
 
 STUDENTS_COUNT = 500
 TUTORS_COUNT = 10
@@ -25,7 +26,7 @@ def create_student():
     username = '_'.join(
         [translit(v, reversed=True).lower() for v in (first_name, last_name,)])
     s = Student.objects.create(
-        username=username +  str(FAKER.pyint()),
+        username=username + str(FAKER.pyint()),
         first_name=first_name,
         last_name=last_name
     )
