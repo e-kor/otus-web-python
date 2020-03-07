@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import inlineformset_factory
-
+from courses.tasks import send_contact_mail
 from courses.models import Course, Lesson
 
 
@@ -26,3 +26,11 @@ class CourseForm(BlogBaseForm):
     class Meta:
         model = Course
         exclude = ()
+
+
+class ContactForm(forms.Form):
+    email = forms.EmailField()
+    body = forms.CharField(widget=forms.Textarea)
+
+    def send_email(self):
+        send_contact_mail.send(self.cleaned_data['email'], self.cleaned_data['body'])

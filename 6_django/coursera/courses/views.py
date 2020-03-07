@@ -2,7 +2,8 @@ from django.db import transaction
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.views.generic import DeleteView, DetailView, ListView, UpdateView
+from django.views.generic import DeleteView, DetailView, FormView, ListView, \
+    UpdateView
 
 from courses import forms
 from .models import Course
@@ -65,8 +66,15 @@ class CourseDeleteView(DeleteView):
         return HttpResponseRedirect(self.get_success_url())
 
 
-def about(request):
-    context = {
-        'title': 'о нас',
-    }
-    return render(request, 'courses/about.html', context)
+class ContactView(FormView):
+    template_name = 'courses/contact.html'
+    form_class = forms.ContactForm
+    success_url = '/thankyou/'
+
+    def form_valid(self, form):
+        form.send_email()
+        return super().form_valid(form)
+
+
+def thankyou(request):
+    return render(request, 'courses/thankyou.html')

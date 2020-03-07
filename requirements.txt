@@ -40,3 +40,5 @@ traitlets==4.3.3
 transliterate==1.10.2
 urllib3==1.25.7
 wcwidth==0.1.8
+django-celery
+redis
