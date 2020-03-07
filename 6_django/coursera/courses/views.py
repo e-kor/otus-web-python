@@ -4,8 +4,11 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import DeleteView, DetailView, FormView, ListView, \
     UpdateView
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.viewsets import ModelViewSet
 
 from courses import forms
+from courses.serializers import CourseSerializer
 from .models import Course
 
 
@@ -78,3 +81,10 @@ class ContactView(FormView):
 
 def thankyou(request):
     return render(request, 'courses/thankyou.html')
+
+
+class CourseAPIViewSet(ModelViewSet):
+    model = Course
+    queryset = Course.objects.filter(is_active=True)
+    serializer_class = CourseSerializer
+    permission_classes = (IsAuthenticated,)

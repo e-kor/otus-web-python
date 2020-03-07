@@ -1,10 +1,11 @@
 from django.urls import path
+from rest_framework.authtoken.views import obtain_auth_token
 
-import courses.views as views
+import users.views as views
 
 app_name = 'users'
 urlpatterns = [
-    path('', views.CourseListView.as_view(), name='edit'),
-    path('', views.CourseListView.as_view(), name='logout'),
-    path('', views.CourseListView.as_view(), name='login'),
+    path('register', views.register, name='register'),
+    path('logout', views.logout, name='logout'),
+    path('login', views.login, name='login'),
 ]

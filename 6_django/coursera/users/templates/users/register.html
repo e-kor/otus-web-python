@@ -1,0 +1,16 @@
+{% extends 'users/base.html' %}
+{% load static %}
+
+
+{% block content %}
+    <div class="h2">
+        Регистрация нового пользователя
+    </div>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ register_form.as_p }}
+        <br>
+        <input type="submit" value="зарегистрироваться">
+    </form>
+
+{% endblock %}
