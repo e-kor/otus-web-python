@@ -1,9 +1,8 @@
 from django.db import transaction
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import DeleteView, DetailView, FormView, ListView, \
-    UpdateView
+    TemplateView, UpdateView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.viewsets import ModelViewSet
 
@@ -72,15 +71,15 @@ class CourseDeleteView(DeleteView):
 class ContactView(FormView):
     template_name = 'courses/contact.html'
     form_class = forms.ContactForm
-    success_url = '/thankyou/'
+    success_url = reverse_lazy('courses:thankyou')
 
     def form_valid(self, form):
         form.send_email()
         return super().form_valid(form)
 
 
-def thankyou(request):
-    return render(request, 'courses/thankyou.html')
+class ThankYouView(TemplateView):
+    template_name = 'courses/thankyou.html'
 
 
 class CourseAPIViewSet(ModelViewSet):

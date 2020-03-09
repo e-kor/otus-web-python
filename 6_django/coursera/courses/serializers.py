@@ -24,14 +24,11 @@ class CourseSerializer(serializers.ModelSerializer):
     def update(self, instance, validated_data):
         lessons_data = validated_data.pop("lessons")
         for lesson_data in lessons_data:
-            if lesson_data.get('id'):
-                l = Lesson.objects.get(pk=lesson_data.pop('id'))
-                for attr_name, value in lesson_data.items():
-                    setattr(l, attr_name, value)
+            lesson_id = lesson_data.pop('id', 0)
+            if lesson_id:
+                Lesson.objects.filter(pk=lesson_id).update(**lessons_data)
             else:
-                l = Lesson(**lesson_data)
-                l.course = instance
-            l.save()
+                Lesson.objects.create(course=instance, **lesson_data)
         for attr_name, value in validated_data.items():
             setattr(instance, attr_name, value)
         instance.save()
@@ -40,8 +37,6 @@ class CourseSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         lessons_data = validated_data.pop("lessons", [])
         instance = Course.objects.create(**validated_data)
-        for lesson_data in lessons_data:
-            l = Lesson(**lesson_data)
-            l.course = instance
-            l.save()
+        Lesson.objects.bulk_create(
+            [Lesson(course=instance, **data) for data in lessons_data])
         return instance
