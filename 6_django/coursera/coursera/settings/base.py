@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'rest_framework',
     'rest_framework.authtoken',
+    "graphene_django",
     "drf_yasg",
 ]
 DRAMATIQ_BROKER = {
