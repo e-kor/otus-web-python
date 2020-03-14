@@ -15,6 +15,7 @@ COURSES_COUNT = 50
 LESSONS_PER_COURSE_COUNT = 30
 FAKER = Faker(locale='ru_RU')
 
+#TODO users - unique username
 
 def clear_db():
     for cls in Tutor, Student, Course, Lesson:
