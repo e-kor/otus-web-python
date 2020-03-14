@@ -17,6 +17,7 @@ django-rest-framework==0.1.0
 djangorestframework==3.11.0
 dramatiq==1.8.1
 Faker==4.0.1
+factory-boy
 idna==2.8
 ipython==7.13.0
 ipython-genutils==0.2.0

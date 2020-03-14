@@ -4,6 +4,8 @@ from django.core.management import BaseCommand
 from faker import Faker
 from transliterate import translit
 
+from courses.factories import CourseFactory, LessonFactory
+from users.factories import TutorFactory, StudentFactory
 from courses.models import Course, Lesson
 from users.models import Student, Tutor
 
@@ -75,15 +77,16 @@ def create_course():
 def fill_db():
     logging.info("started filling test db")
     for _ in range(STUDENTS_COUNT):
-        create_student()
+        StudentFactory()
     logging.info("created %s students", STUDENTS_COUNT)
 
     for _ in range(TUTORS_COUNT):
-        create_tutor()
+        TutorFactory()
     logging.info("created %s tutors", TUTORS_COUNT)
 
     for _ in range(COURSES_COUNT):
-        create_course()
+        CourseFactory(tutor = FAKER.random_element(Tutor.objects.all()),
+                      students = FAKER.random_elements(Student.objects.all()))
     logging.info("created %s courses", COURSES_COUNT)
 
 

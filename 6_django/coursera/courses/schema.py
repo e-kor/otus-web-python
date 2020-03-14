@@ -41,3 +41,6 @@ class Query:
 
     def resolve_courses(self, *args, **kwargs):
         return Course.objects.all()
+
+    def resolve_lessons(self, *args, **kwargs):
+        return Lesson.objects.all()

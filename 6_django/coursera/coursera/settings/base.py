@@ -35,8 +35,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+        'users.apps.UsersConfig',
     'courses.apps.CoursesConfig',
-    'users.apps.UsersConfig',
+
     'rest_framework',
     'rest_framework.authtoken',
     "graphene_django",
@@ -133,7 +134,7 @@ AUTH_PASSWORD_VALIDATORS = [
 AUTH_USER_MODEL = 'users.User'
 
 LANGUAGE_CODE = 'en-us'
-
+LOCALE = 'ru_RU'
 TIME_ZONE = 'UTC'
 
 USE_I18N = True
