@@ -1,4 +1,6 @@
 import factory
+from pytz import utc
+
 from courses.models import Course, Lesson
 from users.models import Tutor, Student
 from users.factories import TutorFactory, StudentFactory
@@ -15,7 +17,7 @@ class LessonFactory(factory.django.DjangoModelFactory):
                          locale=LOCALE)
     description = factory.Faker('text', max_nb_chars=300, ext_word_list=None,
                                 locale=LOCALE)
-    date = factory.Faker('date_this_year')
+    date = factory.Faker('date_time', tzinfo=utc)
 
     class Meta:
         model = Lesson

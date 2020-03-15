@@ -1,7 +1,7 @@
 import graphene
 from graphene_django.types import DjangoObjectType
 
-from .models import Course, Lesson
+from courses.models import Course, Lesson
 
 
 class CourseType(DjangoObjectType):
