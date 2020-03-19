@@ -84,6 +84,6 @@ class ThankYouView(TemplateView):
 
 class CourseAPIViewSet(ModelViewSet):
     model = Course
-    queryset = Course.objects.filter(is_active=True)
+    queryset = Course.objects.filter()
     serializer_class = CourseSerializer
     permission_classes = (IsAuthenticated,)

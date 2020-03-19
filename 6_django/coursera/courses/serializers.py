@@ -8,21 +8,24 @@ class LessonSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Lesson
-        fields = ('id', 'name', 'description', 'date')
+        fields = ('id', 'name', 'description', 'date'
+         )
 
 
 class CourseSerializer(serializers.ModelSerializer):
-    lessons = LessonSerializer(many=True)
+    lessons = LessonSerializer(many=True, required=False)
     tutor_name = serializers.StringRelatedField(read_only=True,
                                                 source='tutor')
 
     class Meta:
         model = Course
         fields = (
-            'id', 'name', 'description', 'tutor_name', 'is_active', 'lessons')
+            'id', 'name', 'description', 'tutor_name',
+            'is_active',
+            'lessons')
 
     def update(self, instance, validated_data):
-        lessons_data = validated_data.pop("lessons")
+        lessons_data = validated_data.pop("lessons", [])
         for lesson_data in lessons_data:
             lesson_id = lesson_data.pop('id', 0)
             if lesson_id:
