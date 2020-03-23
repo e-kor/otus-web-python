@@ -4,12 +4,17 @@ from django.db import models
 from users.models import Student, Tutor
 
 
+class Tag(models.Model):
+    name = models.CharField('Название', max_length=20)
+
+
 class Course(models.Model):
     name = models.CharField('Название', max_length=50)
     description = models.TextField('Описание')
     tutor = models.ForeignKey(Tutor, on_delete=models.SET_NULL, null=True)
     students = models.ManyToManyField(Student, related_name='courses')
     is_active = models.BooleanField("Активен ли", default=True)
+    tags = models.ManyToManyField(Tag)
 
     def __str__(self):
         return f"Course: {self.name}"
@@ -25,6 +30,7 @@ class Lesson(models.Model):
     date = models.DateTimeField("Дата")
     course = models.ForeignKey(Course, on_delete=models.CASCADE,
                                related_name='lessons')
+    tags = models.ManyToManyField(Tag)
 
     def __str__(self):
         return f"Lesson {self.name} ({self.course})"

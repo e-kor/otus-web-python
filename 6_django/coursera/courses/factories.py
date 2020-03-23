@@ -1,22 +1,30 @@
-import logging
+from random import randint
 
 import factory
-from django.db import IntegrityError
+from django.conf import settings
+from factory.django import DjangoModelFactory
 from faker import Faker
 from pytz import utc
 
-from courses.models import Course, Lesson
-from users.models import Tutor, Student
-from users.factories import TutorFactory, StudentFactory
-from django.conf import settings
-from random import randint
+from courses.models import Course, Lesson, Tag
+from users.factories import StudentFactory, TutorFactory
+from users.models import Student
 
 MAX_LESSONS_PER_COURSE = 10
 MAX_STUDENTS_PER_COURSE = 100
 LOCALE = settings.LOCALE
 FAKER = Faker()
 
-class LessonFactory(factory.django.DjangoModelFactory):
+
+class TagFactory(DjangoModelFactory):
+    name = factory.Faker('text', max_nb_chars=15, ext_word_list=None,
+                         locale=LOCALE)
+
+    class Meta:
+        model = Tag
+
+
+class LessonFactory(DjangoModelFactory):
     name = factory.Faker('text', max_nb_chars=50, ext_word_list=None,
                          locale=LOCALE)
     description = factory.Faker('text', max_nb_chars=300, ext_word_list=None,
@@ -26,8 +34,16 @@ class LessonFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = Lesson
 
+    @factory.post_generation
+    def tags(self, create, extracted, **kwargs):
+        if extracted:
+            self.tags.set(extracted)
+        else:
+            self.tags.set(
+                FAKER.random_elements(Tag.objects.all() or [TagFactory()]))
 
-class CourseFactory(factory.django.DjangoModelFactory):
+
+class CourseFactory(DjangoModelFactory):
     name = factory.Faker('text', max_nb_chars=50, ext_word_list=None,
                          locale=LOCALE)
     description = factory.Faker('text', max_nb_chars=300, ext_word_list=None,
@@ -47,6 +63,13 @@ class CourseFactory(factory.django.DjangoModelFactory):
         if extracted:
             self.students.set(extracted)
         else:
-            self.students.set(FAKER.random_elements(Student.objects.all() or [StudentFactory()]))
+            self.students.set(FAKER.random_elements(
+                Student.objects.all() or [StudentFactory()]))
 
-
+    @factory.post_generation
+    def tags(self, create, extracted, **kwargs):
+        if extracted:
+            self.tags.set(extracted)
+        else:
+            self.tags.set(FAKER.random_elements(
+                Tag.objects.all() or [TagFactory()]))

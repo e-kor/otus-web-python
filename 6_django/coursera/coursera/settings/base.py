@@ -27,6 +27,7 @@ except ImportError:
     from .secret_key import SECRET_KEY
 # Application definition
 INSTALLED_APPS = [
+    'silk',
     "django_dramatiq",
     'django_extensions',
     'django.contrib.admin',
@@ -35,7 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-        'users.apps.UsersConfig',
+    'users.apps.UsersConfig',
     'courses.apps.CoursesConfig',
 
     'rest_framework',
@@ -71,6 +72,7 @@ DRAMATIQ_RESULT_BACKEND = {
 # AdminMiddleware is enabled.  The default value is "default".
 DRAMATIQ_TASKS_DATABASE = "default"
 MIDDLEWARE = [
+    'silk.middleware.SilkyMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -82,7 +84,7 @@ MIDDLEWARE = [
 ]
 
 REST_FRAMEWORK = {
-  #  'DEFAULT_RENDERER_CLASSES': ( 'rest_framework.renderers.JSONRenderer', ),
+    #  'DEFAULT_RENDERER_CLASSES': ( 'rest_framework.renderers.JSONRenderer', ),
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10,
     'DEFAULT_AUTHENTICATION_CLASSES': [
@@ -144,7 +146,7 @@ USE_L10N = True
 USE_TZ = True
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static','deploy')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static', 'deploy')
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 
 LOGIN_URL = '/users/login/'

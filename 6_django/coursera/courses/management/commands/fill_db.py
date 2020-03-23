@@ -4,7 +4,7 @@ from django.core.management import BaseCommand
 from django.db import IntegrityError
 from faker import Faker
 
-from courses.factories import CourseFactory
+from courses.factories import CourseFactory, TagFactory
 from courses.models import Course, Lesson
 from users.factories import StudentFactory, TutorFactory
 from users.models import Student, Tutor
@@ -12,6 +12,7 @@ from users.models import Student, Tutor
 STUDENTS_COUNT = 500
 TUTORS_COUNT = 10
 COURSES_COUNT = 50
+TAGS_COUNT = 100
 LESSONS_PER_COURSE_COUNT = 30
 FAKER = Faker()
 
@@ -24,6 +25,8 @@ def clear_db():
 
 def fill_db():
     logging.info("started filling test db")
+    for _ in range(TAGS_COUNT):
+        TagFactory()
     for _ in range(STUDENTS_COUNT):
         try:
             StudentFactory()

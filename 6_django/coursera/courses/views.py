@@ -84,6 +84,8 @@ class ThankYouView(TemplateView):
 
 class CourseAPIViewSet(ModelViewSet):
     model = Course
-    queryset = Course.objects.filter()
+    queryset = (Course.objects.all()
+                .select_related('tutor', )
+                .prefetch_related('lessons', 'lessons__tags', 'tags', ))
     serializer_class = CourseSerializer
     permission_classes = (IsAuthenticated,)
