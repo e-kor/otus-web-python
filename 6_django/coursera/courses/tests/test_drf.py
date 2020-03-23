@@ -1,27 +1,67 @@
 from django.conf import settings
+from django.test import TransactionTestCase
 from django.utils import timezone
 from faker import Faker
 from rest_framework import status
 from rest_framework.authtoken.models import Token
-from rest_framework.test import APITestCase
+from rest_framework.authtoken.views import obtain_auth_token
+from rest_framework.test import APIRequestFactory, APISimpleTestCase, \
+    APITestCase
 
-from courses.factories import CourseFactory
-from courses.models import Course
+from courses.factories import CourseFactory, LessonFactory
+from courses.models import Course, Lesson
 from users.models import User
 
 COURSE_COUNT = 10
-TEST_USER_USERNAME = 'usrname'
-TEST_USER_PSW = 'vsafdadsfa34#'
+TEST_USER_USERNAME = 'TestUserName'
+TEST_USER_PSW = 'testPass!#'
 
 
-class TestCaseForCity(APITestCase):
+class TestWithoutTransactions(APISimpleTestCase):
+    def test_lesson_creation(self):
+        lesson = LessonFactory.build(name="Test")
+        self.assertEqual(lesson.name, "Test")
 
-    def setUp(self):
-        self.faker = Faker(locale=settings.LOCALE)
+
+class TestCourseCreation(TransactionTestCase):
+
+    def test_course_creation(self):
+        course = CourseFactory()
+        self.assertTrue(course.id)
+
+    def test_flush(self):
+        self.assertFalse(Lesson.objects.all(),
+                         "lessons should be flushed between tests")
+
+
+class TestTokenRetrieval(APITestCase):
+
+    def test_token_retrieval(self):
+        request_factory = APIRequestFactory()
+        request = request_factory.post("/api/auth/",
+                                       {'username': TEST_USER_USERNAME,
+                                        'password': TEST_USER_PSW},
+                                       format='json')
+        response = obtain_auth_token(request)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+
+class TestCaseForCourses(APITestCase):
+
+    @classmethod
+    def setUpClass(cls):
         user = User.objects.create_user(TEST_USER_USERNAME, TEST_USER_PSW)
         token, _ = Token.objects.get_or_create(user_id=user.id)
-        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+        cls.token = token
+        cls.faker = Faker(locale=settings.LOCALE)
+        super(TestCaseForCourses, cls).setUpClass()
+
+    @classmethod
+    def setUpTestData(cls):
         [CourseFactory() for _ in range(COURSE_COUNT)]
+
+    def setUp(self):
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token.key)
 
     def test_get_courses_list(self):
         response = self.client.get("/api/courses/")
@@ -77,11 +117,12 @@ class TestCaseForCity(APITestCase):
                 {'name': self.faker.text(max_nb_chars=50, ext_word_list=None),
                  'description': self.faker.text(max_nb_chars=200,
                                                 ext_word_list=None),
-                 'date': timezone.now()}, ]}
-        response = self.client.post(f"/api/courses/", course_data)
+                 'date': timezone.now().isoformat().replace('+00:00', 'Z')}, ]}
+        response = self.client.post(f"/api/courses/", course_data,
+                                    format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         lesson_data = course_data.pop('lessons')[0]
         for field, value in course_data.items():
             self.assertEqual(value, response.data[field])
         for field, value in lesson_data.items():
-            self.assertEqual(value, response.data['lessons'][0])
+            self.assertEqual(value, response.data['lessons'][0][field])
