@@ -8,3 +8,4 @@ __pycache__/
 venv/
 dist/
 build/
+7_js_frontend/node_modules
