@@ -1,3 +1,6 @@
-import '../styles/index.scss';
+// import '../styles/index.scss';
+import login from './login';
 
-console.log('webpack starterkit');
+
+$("#usernameWarning").hide();
+$("#passwordWarning").hide();

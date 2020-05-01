@@ -88,4 +88,4 @@ class CourseAPIViewSet(ModelViewSet):
                 .select_related('tutor', )
                 .prefetch_related('lessons', 'lessons__tags', 'tags', ))
     serializer_class = CourseSerializer
-    permission_classes = (IsAuthenticated,)
+    # permission_classes = (IsAuthenticated,)
