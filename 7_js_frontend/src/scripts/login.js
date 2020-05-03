@@ -63,10 +63,10 @@ function login() {
     axios.post(`${API_URL}auth`, $("#loginForm").serialize())
         .then(response => {
             alert('Успешная авторизация. Токен: ' + response.data.token);
-            console.log(response)
+            console.log(response);
         })
         .catch(error => alert('Неверные данные, попробуйте еще раз.'));
 }
 
 $("#loginButton").click(login);
-$("#loginForm").focusout(validateLoginForm)
+$("#loginForm").focusout(validateLoginForm);
