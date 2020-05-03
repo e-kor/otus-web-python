@@ -7,12 +7,15 @@ run webpack development server:
     npm install
     npm start
 
-run django backend
+run django backend:
+
     python3 -m venv venv
     source venv/bin/activate
     pip install -r requrements.txt
 
     python manage.py migrate
+    python manage.py fill_db
+
     python manage.py runserver
 
 
@@ -25,12 +28,13 @@ run django backend
     * валидация
     * получения токена
 
-
-Задания на очереди
-^^^^^^^^^^^^^^^^^^^^^^^^^
 * Сделать страницу курсов и при ее загрузке получать данные из api с помощью fetch или axios или ajax
     * получение данных
     * страница курсов
+
+Задания на очереди
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
 
 Принятые задания
 ^^^^^^^^^^^^^^^^^^^^^^^^^
