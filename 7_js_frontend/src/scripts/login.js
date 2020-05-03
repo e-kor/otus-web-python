@@ -1,6 +1,15 @@
 import * as $ from 'jquery';
 import axios from 'axios';
 
+
+
+
+
+
+$("#loginButton").prop( "disabled", true );
+
+
+
 const API_URL = "/api/";
 
 function getGeneralWarningMessage(input) {

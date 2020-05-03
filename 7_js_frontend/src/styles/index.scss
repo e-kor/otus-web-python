@@ -3,20 +3,27 @@ $body-color: gray;
 body {
   color: $body-color;
   font-family: sans-serif;
+  text-align: center;
 }
 
 h1 {
-   text-align: center;
+  text-align: center;
 }
+
 form {
   border: solid 1px $body-color;
   border-radius: 10px;
   max-width: 70%;
   text-align: center;
-  margin: auto;
- //#   margin-right: auto;
   padding: 10px;
+  margin: 10px auto 10px;
 }
+
 .alert {
   visibility: hidden;
+}
+
+#course-list {
+  text-align: left;
+  margin: auto;
 }
