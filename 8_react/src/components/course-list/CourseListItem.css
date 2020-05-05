@@ -1,0 +1,17 @@
+.lesson-list-item {
+    margin-top: 20px;
+}
+
+.lesson-list-item__date {
+     font-weight: bold;
+    font-size: smaller;
+ }
+
+.lesson-list-item__name {
+    font-weight: bolder;
+}
+.course-list-item__description{
+    font-weight: lighter;
+    font-style: italic;
+}
+

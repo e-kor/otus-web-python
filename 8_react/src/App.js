@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
-import CourseList from "./components/CourseList";
+import CourseList from "./components/course-list/CourseList";
+import CourseDetails from "./components/course-details/CourseDetails";
 
 function App() {
     return (

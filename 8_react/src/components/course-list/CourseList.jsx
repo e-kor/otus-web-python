@@ -21,7 +21,6 @@ class CourseList extends Component {
     }
 
     fetchMoreData = () => {
-        console.log(this)
         axios.get(`${API_URL}?page=${this.state.nextPageNumber}`)
             .then(response => {
                 this.setState({
@@ -42,7 +41,7 @@ class CourseList extends Component {
                     next={this.fetchMoreData}
                     hasMore={this.state.hasNext}
                     loader={<h4>Loading...</h4>}
-                    height={600}
+                    height={800}
                 >
                     {this.state.coursesData.map(({id, name, description, tags, tutorName, isActive}, index) => (
                         <CourseListItem id={id} name={name} description={description} key={id} tags={tags} tutorName={tutorName} isActive={isActive}/>))}

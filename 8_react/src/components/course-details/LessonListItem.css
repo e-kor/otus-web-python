@@ -1,0 +1,26 @@
+.course-list-item__name {
+    font-weight: bolder;
+}
+.course-list-item__description{
+    font-weight: lighter;
+    font-style: italic;
+}
+
+.course-list-item {
+    margin-top: 5px;
+    border-radius: 10px;
+    border: 1px solid white;
+    padding: 10px;
+}
+
+.course-list-item:hover{
+    border-radius: 10px;
+    border: 1px solid #cccccc;
+}
+.course-list-item__general{
+    cursor: pointer;
+}
+
+.popup-content {
+    width:90%;
+}

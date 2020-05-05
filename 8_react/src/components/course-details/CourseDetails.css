@@ -1,0 +1,16 @@
+.course-details {
+   padding: 30px;
+}
+
+.course-details__name {
+    text-align: center;
+}
+
+.course-details__name {
+    font-weight: bolder;
+}
+.course-details__description{
+    text-align: left;
+    font-weight: lighter;
+    font-style: italic;
+}
