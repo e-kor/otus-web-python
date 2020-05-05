@@ -1,9 +1,11 @@
 import React, {Component} from 'react'
-import './CourseDetails.css'
 import axios from "axios";
 import Tag from "../course-list/Tag";
 import LessonListItem from "./LessonListItem";
+import './CourseDetails.css'
+
 const API_URL = '/api/courses/'
+
 class CourseDetails extends Component {
     state = {
         id: 0,
@@ -25,7 +27,8 @@ class CourseDetails extends Component {
     componentDidMount() {
         this.fetchData()
     }
-    render(){
+
+    render() {
         const courseData = this.state;
         return (
             <div className="course-details">
@@ -33,7 +36,11 @@ class CourseDetails extends Component {
                 <div className="course-details__author">Автор: {courseData.tutorName}</div>
                 <div className="course-details__description">Описание: {courseData.description}</div>
                 {courseData.tags.map((tagName, index) => (<Tag name={tagName}/>))}
-                {courseData.lessons.map(({id, date, name, description}, index) => (<LessonListItem id={id} date={date} name={name} description={description}/>))}
+                <div className="course-details__lessons">
+                    <h3>Занятия</h3>
+                    {courseData.lessons.map(({id, date, name, description}, index) => (
+                        <LessonListItem id={id} date={date} name={name} description={description}/>))}
+                </div>
             </div>
 
         )
