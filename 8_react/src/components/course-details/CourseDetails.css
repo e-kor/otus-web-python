@@ -1,11 +1,8 @@
 .course-details {
     padding: 30px;
+    text-align: center;
 }
 
-.course-details__lessons {
-    margin-top: 30px;
-    border-top: 1px solid grey;
-}
 
 .course-details__name {
     font-weight: bolder;
@@ -15,4 +12,17 @@
     text-align: left;
     font-weight: lighter;
     font-style: italic;
+}
+.course-details__tags {
+    text-align: left;
+}
+
+.course-details__lessons {
+    text-align: left;
+    margin-top: 30px;
+    border-top: 1px solid grey;
+}
+
+.course-details__lessons__header {
+    text-align: center;
 }

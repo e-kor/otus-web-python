@@ -34,7 +34,7 @@ class CourseList extends Component {
     render() {
         return (
             <div className="course-list">
-                <div className="course-list__header">Courses</div>
+                <h2 className="course-list__header">Courses</h2>
                 <InfiniteScroll
                     className="course-list__items"
                     dataLength={this.state.coursesData.length}

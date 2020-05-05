@@ -6,7 +6,7 @@ const LessonListItem = props => {
 
     return (
         <div className="lesson-list-item">
-            <div className="lesson-list-item__date">{date}</div>
+            <div className="lesson-list-item__date">{new Date(date).toLocaleDateString()}</div>
             <div className="lesson-list-item__name">{name}</div>
             <div className="lesson-list-item__description">{description}</div>
         </div>

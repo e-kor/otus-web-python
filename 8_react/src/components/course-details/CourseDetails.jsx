@@ -32,14 +32,14 @@ class CourseDetails extends Component {
         const courseData = this.state;
         return (
             <div className="course-details">
-                <h1 className="course-details__name">{courseData.name}</h1>
+                <h2 className="course-details__name">{courseData.name}</h2>
                 <div className="course-details__author">Автор: {courseData.tutorName}</div>
                 <div className="course-details__description">Описание: {courseData.description}</div>
-                {courseData.tags.map((tagName, index) => (<Tag name={tagName}/>))}
+                <div className="course-details__tags">{courseData.tags.map((tagName, index) => (<Tag name={tagName}/>))}</div>
                 <div className="course-details__lessons">
-                    <h3>Занятия</h3>
+                    <h3 className="course-details__lessons__header">Занятия</h3>
                     {courseData.lessons.map(({id, date, name, description}, index) => (
-                        <LessonListItem id={id} date={date} name={name} description={description}/>))}
+                        <LessonListItem key={index} id={id} date={date} name={name} description={description}/>))}
                 </div>
             </div>
 

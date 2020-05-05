@@ -1,25 +1,16 @@
-.course-list-item__name {
-    font-weight: bolder;
+.lesson-list-item {
+    margin-top: 20px;
 }
 
-.course-list-item__description {
+.lesson-list-item__date {
+    font-weight: bold;
+    font-size: smaller;
+}
+
+.lesson-list-item__name {
+    font-weight: bolder;
+}
+.lesson-list-item__description{
     font-weight: lighter;
     font-style: italic;
 }
-
-.course-list-item {
-    margin-top: 5px;
-    border-radius: 10px;
-    border: 1px solid white;
-    padding: 10px;
-}
-
-.course-list-item:hover {
-    border-radius: 10px;
-    border: 1px solid #cccccc;
-}
-
-.course-list-item__general {
-    cursor: pointer;
-}
-
