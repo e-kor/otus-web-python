@@ -17,7 +17,7 @@ FAKER = Faker()
 
 
 class TagFactory(DjangoModelFactory):
-    name = factory.Faker('text', max_nb_chars=15, ext_word_list=None,
+    name = factory.Faker('word',
                          locale=LOCALE)
 
     class Meta:
@@ -72,4 +72,4 @@ class CourseFactory(DjangoModelFactory):
             self.tags.set(extracted)
         else:
             self.tags.set(FAKER.random_elements(
-                Tag.objects.all() or [TagFactory()]))
+                Tag.objects.all() or [TagFactory()], length=5))

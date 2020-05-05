@@ -45,7 +45,7 @@ class CourseList extends Component {
                     height={600}
                 >
                     {this.state.coursesData.map(({id, name, description, tags, tutorName, isActive}, index) => (
-                        <CourseListItem id={id} name={name} description={description} key={id}/>))}
+                        <CourseListItem id={id} name={name} description={description} key={id} tags={tags} tutorName={tutorName} isActive={isActive}/>))}
                 </InfiniteScroll>
             </div>
 

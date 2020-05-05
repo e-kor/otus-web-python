@@ -5,7 +5,7 @@ from django.db import IntegrityError
 from faker import Faker
 
 from courses.factories import CourseFactory, TagFactory
-from courses.models import Course, Lesson
+from courses.models import Course, Lesson, Tag
 from users.factories import StudentFactory, TutorFactory
 from users.models import Student, Tutor
 
@@ -18,7 +18,7 @@ FAKER = Faker()
 
 
 def clear_db():
-    for cls in Tutor, Student, Course, Lesson:
+    for cls in Tutor, Student, Course, Lesson, Tag:
         info = cls.objects.all().delete()
         logging.info('deleted all %s: %s', cls.__name__, info)
 

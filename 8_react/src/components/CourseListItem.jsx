@@ -1,5 +1,7 @@
 import React from 'react';
 import './CourseListItem.css'
+import InfiniteScroll from "react-infinite-scroll-component";
+import Tag from "./Tag";
 
 const CourseListItem = props => {
     const {id, name, description, tags, tutorName, isActive} = props
@@ -8,6 +10,8 @@ const CourseListItem = props => {
         <div className="course-list-item">
             <div className="course-list-item__name">{name}</div>
             <div className="course-list-item__description">{description}</div>
+            {tags.map((tagName, index) => (
+                <Tag name={tagName}/>))}
         </div>
 
     )
