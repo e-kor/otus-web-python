@@ -12,7 +12,7 @@ class CourseList extends Component {
         coursesData: [],
         nextPageNumber: 1,
         hasNext: true
-    }
+    };
 
     state = this.initialState;
 
@@ -29,7 +29,7 @@ class CourseList extends Component {
                     hasNext: response.data.hasNext
                 })
             });
-    }
+    };
 
     render() {
         return (

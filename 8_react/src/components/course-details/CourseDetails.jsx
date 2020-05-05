@@ -4,7 +4,7 @@ import Tag from "../course-list/Tag";
 import LessonListItem from "./LessonListItem";
 import './CourseDetails.css'
 
-const API_URL = '/api/courses/'
+const API_URL = '/api/courses/';
 
 class CourseDetails extends Component {
     state = {
@@ -22,7 +22,7 @@ class CourseDetails extends Component {
             .then(response => {
                 this.setState(response.data)
             });
-    }
+    };
 
     componentDidMount() {
         this.fetchData()
@@ -45,6 +45,6 @@ class CourseDetails extends Component {
 
         )
     }
-};
+}
 
 export default CourseDetails;

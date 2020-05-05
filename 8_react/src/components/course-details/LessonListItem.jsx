@@ -2,7 +2,7 @@ import React from 'react';
 import './LessonListItem.css'
 
 const LessonListItem = props => {
-    const {id, date, name, description} = props
+    const {id, date, name, description} = props;
 
     return (
         <div className="lesson-list-item">
@@ -12,6 +12,6 @@ const LessonListItem = props => {
         </div>
 
     )
-}
+};
 
 export default LessonListItem

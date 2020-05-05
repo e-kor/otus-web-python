@@ -5,7 +5,7 @@ import Tag from "./Tag";
 import CourseDetails from "../course-details/CourseDetails";
 
 const CourseListItem = props => {
-    const {id, name, description, tags, tutorName, isActive} = props
+    const {id, name, description, tags, tutorName, isActive} = props;
 
     return (
         <div className="course-list-item">
@@ -23,6 +23,6 @@ const CourseListItem = props => {
         </div>
 
     )
-}
+};
 
 export default CourseListItem
