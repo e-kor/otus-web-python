@@ -1,0 +1,11 @@
+.course-list-item__name {
+    font-weight: bolder;
+}
+.course-list-item__description{
+    font-weight: lighter;
+    font-style: italic;
+}
+
+.course-list-item {
+    margin-top: 10px;
+}

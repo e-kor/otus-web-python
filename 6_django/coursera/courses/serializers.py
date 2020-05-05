@@ -43,3 +43,15 @@ class CourseSerializer(serializers.ModelSerializer):
         Lesson.objects.bulk_create(
             [Lesson(course=instance, **data) for data in lessons_data])
         return instance
+
+class CourseListSerializer(serializers.ModelSerializer):
+    tutor_name = serializers.StringRelatedField(read_only=True,
+                                                source='tutor')
+    tags = serializers.SlugRelatedField(slug_field='name', many=True, read_only=True)
+
+    class Meta:
+        model = Course
+        fields = (
+            'id', 'name', 'description', 'tutor_name',
+            'is_active', 'tags',)
+

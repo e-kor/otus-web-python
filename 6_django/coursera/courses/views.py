@@ -3,11 +3,10 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.views.generic import DeleteView, DetailView, FormView, ListView, \
     TemplateView, UpdateView
-from rest_framework.permissions import IsAuthenticated
 from rest_framework.viewsets import ModelViewSet
 
 from courses import forms
-from courses.serializers import CourseSerializer
+from courses.serializers import CourseListSerializer, CourseSerializer
 from .models import Course
 
 
@@ -87,5 +86,10 @@ class CourseAPIViewSet(ModelViewSet):
     queryset = (Course.objects.all()
                 .select_related('tutor', )
                 .prefetch_related('lessons', 'lessons__tags', 'tags', ))
-    serializer_class = CourseSerializer
+
+    # serializer_class = CourseSerializer
     # permission_classes = (IsAuthenticated,)
+    def get_serializer_class(self):
+        if self.action == 'list':
+            return CourseListSerializer
+        return CourseSerializer

@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import os
 
+
 BASE_DIR = os.path.join(
     os.path.dirname(os.path.dirname(os.path.abspath(__file__))), '..')
 print(BASE_DIR)
@@ -26,7 +27,9 @@ except ImportError:
         f.write('SECRET_KEY = \'{}\''.format(get_random_secret_key()))
     from .secret_key import SECRET_KEY
 # Application definition
+
 INSTALLED_APPS = [
+    'corsheaders',
     'silk',
     "django_dramatiq",
     'django_extensions',
@@ -72,7 +75,9 @@ DRAMATIQ_RESULT_BACKEND = {
 # AdminMiddleware is enabled.  The default value is "default".
 DRAMATIQ_TASKS_DATABASE = "default"
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'silk.middleware.SilkyMiddleware',
+
     'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -83,15 +88,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-REST_FRAMEWORK = {
-    #  'DEFAULT_RENDERER_CLASSES': ( 'rest_framework.renderers.JSONRenderer', ),
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 10,
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.BasicAuthentication',
-        'rest_framework.authentication.TokenAuthentication'
-    ]
-}
+
 ROOT_URLCONF = 'coursera.urls'
 SHELL_PLUS = "ipython"
 TEMPLATES = [
@@ -157,3 +154,22 @@ EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
 EMAIL_FILE_PATH = os.path.join(BASE_DIR, "tmp", "emails")
 # SERVER_EMAIL = 'coursera_warning@mail.ru'
 DEFAULT_FROM_EMAIL = 'coursera@coursera.ru'
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': ('djangorestframework_camel_case.render.CamelCaseJSONRenderer',
+                                 'djangorestframework_camel_case.render.CamelCaseBrowsableAPIRenderer',),
+    'DEFAULT_PAGINATION_CLASS': 'coursera.settings.pagination.CustomPagination',
+
+    'PAGE_SIZE': 10,
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+
+    ],
+    'DEFAULT_PARSER_CLASSES': (
+        'djangorestframework_camel_case.parser.CamelCaseFormParser',
+        'djangorestframework_camel_case.parser.CamelCaseMultiPartParser',
+        'djangorestframework_camel_case.parser.CamelCaseJSONParser',
+    ),
+}
