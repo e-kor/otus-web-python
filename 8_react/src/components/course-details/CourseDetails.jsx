@@ -1,24 +1,28 @@
 import React, {Component} from 'react'
-import axios from "axios";
 import Tag from "../course-list/Tag";
 import LessonListItem from "./LessonListItem";
 import './CourseDetails.css'
+import APIService from "../APIservice";
 
-const API_URL = '/api/courses/';
 
 class CourseDetails extends Component {
-    state = {
-        id: 0,
-        description: "",
-        isActive: true,
-        lessons: [],
-        name: "",
-        tags: [],
-        tutorName: ""
-    };
+    constructor(props) {
+        super(props);
+        this.state = {
+            id: 0,
+            description: "",
+            isActive: true,
+            lessons: [],
+            name: "",
+            tags: [],
+            tutorName: ""
+        };
+        this.apiService = new APIService();
+    }
+
 
     fetchData = () => {
-        axios.get(`${API_URL}${this.props.id}`)
+        this.apiService.fetchCourseDetails(this.props.id)
             .then(response => {
                 this.setState(response.data)
             });
@@ -35,7 +39,8 @@ class CourseDetails extends Component {
                 <h2 className="course-details__name">{courseData.name}</h2>
                 <div className="course-details__author">Автор: {courseData.tutorName}</div>
                 <div className="course-details__description">Описание: {courseData.description}</div>
-                <div className="course-details__tags">{courseData.tags.map((tagName, index) => (<Tag name={tagName}/>))}</div>
+                <div className="course-details__tags">{courseData.tags.map((tagName, index) => (
+                    <Tag name={tagName}/>))}</div>
                 <div className="course-details__lessons">
                     <h3 className="course-details__lessons__header">Занятия</h3>
                     {courseData.lessons.map(({id, date, name, description}, index) => (

@@ -1,34 +1,34 @@
 import React, {Component} from 'react'
 import InfiniteScroll from "react-infinite-scroll-component";
-import axios from 'axios';
 import CourseListItem from "./CourseListItem";
 import './CourseList.css'
-
-const API_URL = '/api/courses/';
+import APIService from "../APIservice";
 
 
 class CourseList extends Component {
-    initialState = {
-        coursesData: [],
-        nextPageNumber: 1,
-        hasNext: true
-    };
+    constructor(props) {
+        super(props);
+        this.state = {
+            coursesData: [],
+            nextPageNumber: 1,
+            hasNext: true
+        };
+        this.apiService = new APIService();
+    }
 
-    state = this.initialState;
 
     componentDidMount() {
         this.fetchMoreData()
     }
 
     fetchMoreData = () => {
-        axios.get(`${API_URL}?page=${this.state.nextPageNumber}`)
-            .then(response => {
-                this.setState({
-                    coursesData: [...this.state.coursesData, ...response.data.results],
-                    nextPageNumber: response.data.nextPageNumber,
-                    hasNext: response.data.hasNext
-                })
-            });
+        this.apiService.fetchCourseList(this.state.nextPageNumber).then(response => {
+            this.setState({
+                coursesData: [...this.state.coursesData, ...response.data.results],
+                nextPageNumber: response.data.nextPageNumber,
+                hasNext: response.data.hasNext
+            })
+        });
     };
 
     render() {
@@ -44,7 +44,8 @@ class CourseList extends Component {
                     height={800}
                 >
                     {this.state.coursesData.map(({id, name, description, tags, tutorName, isActive}, index) => (
-                        <CourseListItem id={id} name={name} description={description} key={id} tags={tags} tutorName={tutorName} isActive={isActive}/>))}
+                        <CourseListItem id={id} name={name} description={description} key={id} tags={tags}
+                                        tutorName={tutorName} isActive={isActive}/>))}
                 </InfiniteScroll>
             </div>
 
