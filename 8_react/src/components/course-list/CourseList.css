@@ -6,3 +6,11 @@
     justify-content: left;
     text-align: left;
 }
+
+.course-list__loader {
+    position: absolute;
+    left: 50%;
+    margin-left: -50px;
+    margin-top: 100px;
+
+}

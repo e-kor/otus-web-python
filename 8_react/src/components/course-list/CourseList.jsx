@@ -3,6 +3,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import CourseListItem from "./CourseListItem";
 import './CourseList.css'
 import APIService from "../APIservice";
+import Loader from 'react-loader-spinner'
 
 
 class CourseList extends Component {
@@ -40,7 +41,14 @@ class CourseList extends Component {
                     dataLength={this.state.coursesData.length}
                     next={this.fetchMoreData}
                     hasMore={this.state.hasNext}
-                    loader={<h4>Loading...</h4>}
+                    loader={<Loader className="course-list__loader"
+                        type="TailSpin"
+                        color="grey"
+                        height={100}
+                        width={100}
+                        timeout={3000} //3 secs
+
+                    />}
                     height={800}
                 >
                     {this.state.coursesData.map(({id, name, description, tags, tutorName, isActive}, index) => (
