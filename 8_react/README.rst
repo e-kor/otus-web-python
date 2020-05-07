@@ -28,18 +28,24 @@ run django backend::
 
 Задания на проверке
 ###################
-* Сделать главную страницу на react
-    * главная страница - список курсов
-        * получение курсов
-        * автозагрузка
-* Сделать страницу курсов, одного курса и записи на курс на react
-    * попап деталей курса
-        * ретрив деталей
+
 
 Задания на очереди
 ###################
 * Перевести все страницы сайта на react
-* Организация всего приложения в виде SPA
+    * front
+        * replace bootstrap with material ui
+    * api end points
+        * contact
+        * registration
+        * auth - save to state
+        * join course
+        * my courses
+    * front
+        * add registration
+        * add login
+        * course-details -- add join button
+        * add page my courses
 * Написание unit-тестов для UI и back-end
 
 react

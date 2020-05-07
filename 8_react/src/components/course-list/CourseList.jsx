@@ -44,10 +44,6 @@ class CourseList extends Component {
                     loader={<Loader className="course-list__loader"
                         type="TailSpin"
                         color="grey"
-                        height={100}
-                        width={100}
-                        timeout={3000} //3 secs
-
                     />}
                     height={800}
                 >
