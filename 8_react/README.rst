@@ -35,11 +35,10 @@ run django backend::
 * Перевести все страницы сайта на react
     * front
         * replace bootstrap with material ui
-    * api end points
-        * contact
     * front
         * add registration
         * add login
+            * redux - presentation, docs
         * course-details -- add join button
         * add page my courses
 * Написание unit-тестов для UI и back-end
