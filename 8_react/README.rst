@@ -37,10 +37,6 @@ run django backend::
         * replace bootstrap with material ui
     * api end points
         * contact
-        * registration
-        * auth - save to state
-        * join course
-        * my courses
     * front
         * add registration
         * add login

@@ -1,8 +1,19 @@
 from django.contrib import auth
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth.password_validation import validate_password
+from django.core.exceptions import ValidationError
+from django.db import IntegrityError
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
+from drf_yasg.utils import swagger_auto_schema
+from rest_framework.decorators import api_view
+from rest_framework.exceptions import MethodNotAllowed
+from rest_framework.request import Request
+from rest_framework.response import Response
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+
+from users.models import Student
 
 
 def login(request):
@@ -30,7 +41,7 @@ def logout(request):
     return HttpResponseRedirect(reverse('courses:index'))
 
 
-def register(request):
+def register_(request):
     title = 'регистрация'
 
     if request.method == 'POST':
@@ -43,3 +54,20 @@ def register(request):
         register_form = UserCreationForm()
     content = {'title': title, 'register_form': register_form}
     return render(request, 'users/register.html', content)
+
+
+@swagger_auto_schema(methods=['post'], request_body=TokenObtainPairSerializer)
+@api_view(['POST'])
+def register(request: Request):
+    credentials = request.data
+    try:
+        student = Student.objects.create(username=credentials['username'])
+        password = credentials['password']
+        validate_password(password)
+        student.set_password(password)
+        return Response({'detail': "OK"})
+    except IntegrityError:
+        raise MethodNotAllowed(method="register", detail="user with such username is already registered")
+    except ValidationError as e:
+        student.delete()
+        raise MethodNotAllowed(method="registe", detail=f"password not passed validation: {e}")

@@ -10,8 +10,9 @@ from rest_framework import permissions
 from .schema import schema
 
 api_urls = [
-    path('api/', include('courses.api_urls')),
-    path('api/', include('users.api_urls')),
+    path('api/courses/', include('courses.api_urls')),
+    path('api/auth/', include('users.api_urls')),
+    path('api/misc/', include('misc.urls')),
 ]
 
 schema_view = get_schema_view(

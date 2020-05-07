@@ -3,10 +3,16 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.views.generic import DeleteView, DetailView, FormView, ListView, \
     TemplateView, UpdateView
-from rest_framework.viewsets import ModelViewSet
+from rest_framework import mixins
+from rest_framework.decorators import action
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.request import Request
+from rest_framework.response import Response
+from rest_framework.viewsets import GenericViewSet
 
 from courses import forms
 from courses.serializers import CourseListSerializer, CourseSerializer
+from users.models import Student
 from .models import Course
 
 
@@ -81,15 +87,40 @@ class ThankYouView(TemplateView):
     template_name = 'courses/thankyou.html'
 
 
-class CourseAPIViewSet(ModelViewSet):
+class IsStudent(IsAuthenticated):
+    """
+    Allows access only to Students
+    """
+
+    def has_permission(self, request, view):
+        super().has_permission(request, view)
+        return bool(Student.objects.filter(id=request.user.id))
+
+
+class CourseAPIViewSet(mixins.RetrieveModelMixin, mixins.ListModelMixin, GenericViewSet):
     model = Course
     queryset = (Course.objects.all()
                 .select_related('tutor', )
                 .prefetch_related('lessons', 'lessons__tags', 'tags', ))
 
-    # serializer_class = CourseSerializer
-    # permission_classes = (IsAuthenticated,)
     def get_serializer_class(self):
         if self.action == 'list':
             return CourseListSerializer
         return CourseSerializer
+
+    @action(detail=True, methods=["POST"], permission_classes=(IsStudent,))
+    def join(self, request: Request, **kwargs):
+        course = self.get_object()
+        course.students.add(Student.objects.get(id=request.user.id))
+        return Response({"details": "OK"})
+
+    @action(detail=True, methods=["POST"], permission_classes=(IsStudent,))
+    def leave(self, request: Request, **kwargs):
+        course = self.get_object()
+        course.students.remove(Student.objects.get(id=request.user.id))
+        return Response({"details": "OK"})
+
+    @action(detail=False, methods=["GET"], permission_classes=(IsStudent,))
+    def my(self, request: Request, **kwargs):
+        student = Student.objects.get(id=request.user.id)
+        return Response(CourseListSerializer(student.courses).data)

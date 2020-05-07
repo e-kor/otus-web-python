@@ -77,7 +77,6 @@ DRAMATIQ_TASKS_DATABASE = "default"
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'silk.middleware.SilkyMiddleware',
-
     'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -131,7 +130,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 AUTH_USER_MODEL = 'users.User'
-
+ATOMIC_REQUESTS = True
 LANGUAGE_CODE = 'en-us'
 LOCALE = 'ru_RU'
 TIME_ZONE = 'UTC'
@@ -165,6 +164,7 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.TokenAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
 
     ],
     'DEFAULT_PARSER_CLASSES': (
