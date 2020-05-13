@@ -18,22 +18,22 @@ export default class APIService {
     };
 
     joinCourse = (courseId) => {
-        return axios.post(`${COURSES_URL}${courseId}/join`, {})
+        return axios.post(`${COURSES_URL}${courseId}/join/`, {})
     };
 
     leaveCourse = (courseId) => {
-        return axios.post(`${COURSES_URL}${courseId}/leave`, {})
+        return axios.post(`${COURSES_URL}${courseId}/leave/`, {})
     };
-    login = (username, password) => {
-        return axios.post(`${AUTH_URL}token-get`, {username, password})
-    };
-
-    register = (username, password) => {
-        return axios.post(`${AUTH_URL}register`, {username, password})
+    login = ({username, password}) => {
+        return axios.post(`${AUTH_URL}token-get/`, {username, password})
     };
 
-    sendFeedback = (email, body) => {
-        return axios.post(`${MISC_URL}feedback`, {email, body})
+    register = ({username, password}) => {
+        return axios.post(`${AUTH_URL}register/`, {username, password})
+    };
+
+    sendFeedback = ({email, body}) => {
+        return axios.post(`${MISC_URL}feedback/`, {email, body})
     };
 
 
