@@ -15,9 +15,9 @@ class LoginView extends Component {
     render() {
         return (
             <div>
-            <UserForm headerText="Вход"
-                      buttonText="Войти"
-                      handleSubmit={this.apiService.login}/>
+                <UserForm headerText="Вход"
+                          buttonText="Войти"
+                          handleSubmit={this.apiService.login}/>
                 <Grid container justify="center">
                     <Grid item>
                         <Link href="/signup" variant="body2">

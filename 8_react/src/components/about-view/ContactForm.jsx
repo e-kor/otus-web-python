@@ -16,22 +16,16 @@ class ContactForm extends React.Component {
         this.apiService = new APIService();
     }
 
-    handleEmailChange = (event) => {
-        // const email = event.target.value;
-        // console.log(event.target);
-        this.setState({email: event.target.value});
-    }
-
-    handleMessageChange = (event) => {
-        // const email = event.target.value;
-        // console.log(event.target);
-        this.setState({body: event.target.value});
-    }
+    handleChange = event => {
+        this.setState({
+            [event.target.name]: event.target.value
+        });
+    };
 
     handleSubmit = () => {
-        console.log(this.state)
+        console.log(this.state);
         this.apiService.sendFeedback(this.state)
-    }
+    };
 
     render() {
         const {email, body} = this.state;
@@ -48,7 +42,7 @@ class ContactForm extends React.Component {
                     <Grid item xs={12}>
                         <TextValidator
                             label="Email"
-                            onChange={this.handleEmailChange}
+                            onChange={this.handleChange}
                             name="email"
                             value={email}
                             validators={['required', 'isEmail']}
@@ -61,8 +55,8 @@ class ContactForm extends React.Component {
                     <Grid item xs={12}>
                         <TextValidator
                             label="Your message"
-                            onChange={this.handleMessageChange}
-                            name="message"
+                            onChange={this.handleChange}
+                            name="body"
                             value={body}
                             validators={['required']}
                             errorMessages={['this field is required']}

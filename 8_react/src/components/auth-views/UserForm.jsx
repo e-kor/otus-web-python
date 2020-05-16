@@ -3,7 +3,6 @@ import Button from '@material-ui/core/Button';
 import {TextValidator, ValidatorForm} from 'react-material-ui-form-validator';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import APIService from "../APIservice";
 import "./UserForm.css"
 
 class UserForm extends React.Component {
@@ -14,25 +13,17 @@ class UserForm extends React.Component {
             username: "",
             password: ""
         };
-        this.apiService = new APIService();
     }
 
-    handleUsernameChange = (event) => {
-        // const email = event.target.value;
-        // console.log(event.target);
-        this.setState({username: event.target.value});
-    }
-
-    handlePasswordChange = (event) => {
-        // const email = event.target.value;
-        // console.log(event.target);
-        this.setState({password: event.target.value});
-    }
+    handleChange = event => {
+        this.setState({
+            [event.target.name]: event.target.value
+        });
+    };
 
     handleSubmit = () => {
-        console.log(this.state);
         this.props.handleSubmit(this.state)
-    }
+    };
 
     render() {
         const {username, password} = this.state;
@@ -49,7 +40,7 @@ class UserForm extends React.Component {
                     <Grid item xs={12}>
                         <TextValidator
                             label="Username"
-                            onChange={this.handleUsernameChange}
+                            onChange={this.handleChange}
                             name="username"
                             value={username}
                             validators={['required']}
@@ -62,7 +53,7 @@ class UserForm extends React.Component {
                     <Grid item xs={12}>
                         <TextValidator
                             label="Password"
-                            onChange={this.handlePasswordChange}
+                            onChange={this.handleChange}
                             name="password"
                             value={password}
                             validators={['required']}
@@ -95,5 +86,5 @@ UserForm.defaultProps = {
     handleSubmit(data) {
         console.log(data)
     }
-}
+};
 export default UserForm;
