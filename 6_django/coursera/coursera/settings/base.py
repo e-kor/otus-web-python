@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
-
+from datetime import timedelta
 
 BASE_DIR = os.path.join(
     os.path.dirname(os.path.dirname(os.path.abspath(__file__))), '..')
@@ -87,7 +87,6 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-
 ROOT_URLCONF = 'coursera.urls'
 SHELL_PLUS = "ipython"
 TEMPLATES = [
@@ -154,7 +153,6 @@ EMAIL_FILE_PATH = os.path.join(BASE_DIR, "tmp", "emails")
 # SERVER_EMAIL = 'coursera_warning@mail.ru'
 DEFAULT_FROM_EMAIL = 'coursera@coursera.ru'
 
-
 REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': ('djangorestframework_camel_case.render.CamelCaseJSONRenderer',
                                  'djangorestframework_camel_case.render.CamelCaseBrowsableAPIRenderer',),
@@ -172,4 +170,10 @@ REST_FRAMEWORK = {
         'djangorestframework_camel_case.parser.CamelCaseMultiPartParser',
         'djangorestframework_camel_case.parser.CamelCaseJSONParser',
     ),
+}
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=7),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=30),
+
 }

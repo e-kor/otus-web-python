@@ -34,13 +34,10 @@ run django backend::
 ###################
 * Перевести все страницы сайта на react
     * front
-        * replace bootstrap with material ui
-    * front
-        * add registration
-        * add login
-            * redux - presentation, docs
-        * course-details -- add join button
-        * add page my courses
+        * logout button
+        * course-details -- add join/leave button
+    * todo
+        * redirect after login
 * Написание unit-тестов для UI и back-end
 
 react

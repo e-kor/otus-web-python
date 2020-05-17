@@ -97,7 +97,7 @@ class IsStudent(IsAuthenticated):
         return bool(Student.objects.filter(id=request.user.id))
 
 
-class CourseAPIViewSet(mixins.RetrieveModelMixin, mixins.ListModelMixin, GenericViewSet):
+class CourseAPIViewSet( mixins.ListModelMixin, GenericViewSet):
     model = Course
     queryset = (Course.objects.all()
                 .select_related('tutor', )
@@ -123,4 +123,13 @@ class CourseAPIViewSet(mixins.RetrieveModelMixin, mixins.ListModelMixin, Generic
     @action(detail=False, methods=["GET"], permission_classes=(IsStudent,))
     def my(self, request: Request, **kwargs):
         student = Student.objects.get(id=request.user.id)
-        return Response(CourseListSerializer(student.courses).data)
+        return Response({"results": CourseListSerializer(student.courses, many=True).data,
+                         "has_next": False})
+
+    def retrieve(self, request: Request, *args, **kwargs):
+        instance: Course = self.get_object()
+        data = serializer = self.get_serializer(instance).data
+        print(request.user)
+        if request.user:
+            data["joined"] = bool(instance.students.filter(id=request.user.id))
+        return Response(data)

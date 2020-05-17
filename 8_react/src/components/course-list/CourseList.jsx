@@ -23,7 +23,7 @@ class CourseList extends Component {
     }
 
     fetchMoreData = () => {
-        this.apiService.fetchCourseList(this.state.nextPageNumber).then(response => {
+        this.props.loadData(this.state.nextPageNumber).then(response => {
             this.setState({
                 coursesData: [...this.state.coursesData, ...response.data.results],
                 nextPageNumber: response.data.nextPageNumber,
@@ -35,7 +35,7 @@ class CourseList extends Component {
     render() {
         return (
             <div className="course-list">
-                <h1 className="course-list__header">Courses</h1>
+                <h1 className="course-list__header">{this.props.header}</h1>
                 <InfiniteScroll
                     className="course-list__items"
                     dataLength={this.state.coursesData.length}

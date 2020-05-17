@@ -13,20 +13,23 @@ import Col from "react-bootstrap/Col";
 import 'typeface-roboto';
 import LoginView from "./components/auth-views/LoginView";
 import SignupView from "./components/auth-views/SignUpView";
+import CourseListAll from "./components/course-list/CourseListAll";
+import CourseListMy from "./components/course-list/CourseListMy";
+import LoginControl from "./components/auth-views/LoginControl";
 
 
 function App() {
     return (
         <Router>
-
             <Navbar bg="dark" variant="dark">
                 <Navbar.Brand>Coursera</Navbar.Brand>
                 <Nav className="mr-auto">
                     <Nav.Link href="/">Courses</Nav.Link>
+                    {localStorage.token&&<Nav.Link href="/mycourses">My courses</Nav.Link>}
                     <Nav.Link href="/about">About</Nav.Link>
                 </Nav>
                 <Nav>
-                    <Nav.Link href="/login">Login</Nav.Link>
+                    <LoginControl/>
                 </Nav>
             </Navbar>
             <Container>
@@ -41,8 +44,11 @@ function App() {
                         <Route path="/signup">
                             <SignupView/>
                         </Route>
+                        <Route path="/mycourses">
+                            <CourseListMy/>
+                        </Route>
                         <Route path="/">
-                            <CourseList/>
+                            <CourseListAll/>
                         </Route>
                     </Switch></Col>
                 </Row>

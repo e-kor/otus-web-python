@@ -13,6 +13,7 @@
     font-weight: lighter;
     font-style: italic;
 }
+
 .course-details__tags {
     text-align: left;
 }
@@ -26,3 +27,4 @@
 .course-details__lessons__header {
     text-align: center;
 }
+

@@ -65,6 +65,7 @@ def register(request: Request):
         password = credentials['password']
         validate_password(password)
         student.set_password(password)
+        student.save()
         return Response({'detail': "OK"})
     except IntegrityError:
         raise MethodNotAllowed(method="register", detail="user with such username is already registered")
